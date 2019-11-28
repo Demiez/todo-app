@@ -1,0 +1,35 @@
+@import "../../assets/styles/variables";
+
+html,
+body,
+nav,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input,
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html {
+  font-size: 10px;
+}
+
+body * {
+  box-sizing: border-box;
+  font-family: $main-font;
+  font-size: 1.6rem;
+  letter-spacing: 0.2rem;
+  color: $main-color;
+}
+
+img {
+  max-width: $absolute-width;
+  width: auto;
+}

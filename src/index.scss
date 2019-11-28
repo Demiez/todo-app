@@ -1,0 +1,14 @@
+@import './assets/styles/variables';
+@import './assets/styles/styles';
+
+.app {
+  border-collapse: collapse;
+  max-width: 850px;
+  margin: $margin-center;
+  background-color: rgba(8, 5, 46, 0.2);
+}
+
+nav {
+  padding: 20px 0;
+}
+
