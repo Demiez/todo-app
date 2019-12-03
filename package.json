@@ -2,7 +2,7 @@
   "name": "todo-app",
   "description": "A basic todo app, which helps to crud events",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.config.dev.js --port 3000"
+    "start": "webpack-dev-server --config webpack.config.dev.js --port 3001"
   },
   "dependencies": {
     "prop-types": "15.7.2",
