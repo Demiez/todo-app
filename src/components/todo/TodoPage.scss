@@ -5,3 +5,21 @@
     margin-bottom: 0.5rem;
   }
 }
+
+.eventItem {
+  margin-bottom: 2px;
+}
+
+.removeEvent, .completeEvent {
+  background: transparent;
+  margin-left: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  img {
+    width: 13px;
+
+  }
+}

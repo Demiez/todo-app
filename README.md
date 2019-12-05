@@ -7,6 +7,7 @@
 - HomePage
 - TodoPage
   - AddEvent
-  - SeeEvents
+  - CompleteEvent
+  - RemoveEvent
 - AboutPage 
 3. **Repository**
