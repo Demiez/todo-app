@@ -9,7 +9,7 @@ export default function eventItemReducer (state = [], action) {
 
             return state.map(eventItem => {
                 if (eventItem === selectedItem){
-                    eventItem = {...eventItem, style : {textDecoration: "line-through"}}
+                    eventItem = {...eventItem, completed : true};
                     console.log("Complete => ", eventItem);
                     return eventItem;
                 }

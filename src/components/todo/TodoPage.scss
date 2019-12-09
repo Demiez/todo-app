@@ -4,6 +4,16 @@
     border: 0.1rem solid black;
     margin-bottom: 0.5rem;
   }
+  label {
+    position: relative;
+
+    .error-box {
+      position: absolute;
+      top: 20px;
+      left: 200px;
+      width: 200px;
+    }
+  }
 }
 
 .eventItem {

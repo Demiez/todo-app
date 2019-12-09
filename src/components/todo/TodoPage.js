@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as eventActions from '../redux/actions/eventActions';
-import crossIcon from '../../assets/images/cross.svg';
-import thumbUpIcon from '../../assets/images/thumb-up.svg';
+import EventItem from './EventItem/EventItem';
+import validator from '../../utils/validator';
 
 import './TodoPage.scss';
 
@@ -15,24 +15,38 @@ class TodoPage extends Component {
                 title: "",
                 desc: "",
                 date: "",
-                style: {
-                    textDecoration: "none"
-                }
+                completed: false,
             },
+            titleValid: false,
+            descValid: false,
+            dateValid: false
         }
     }
 
     handleChange = event => {
+        const {eventItems} = this.props;
         const {name, value} = event.target;
-        const eventItem = { ...this.state.eventItem, [name]: value}
-        this.setState({eventItem});
+        const eventItem = { ...this.state.eventItem, [name]: value};
+        this.setState({
+            eventItem,
+            [`${name}Valid`]: validator(eventItems, name, value),
+        });
     };
 
     handleSubmit = event => {
         event.preventDefault();
-        const {eventItem} = this.state;
-        // console.log("Passing: ", eventItem);
-        this.props.dispatch(eventActions.createEventItem(eventItem))
+        const {eventItems} = this.props;
+        const {
+            eventItem,
+            titleValid,
+            descValid,
+            dateValid,
+        } = this.state;
+        if (titleValid &&
+            descValid &&
+            dateValid &&
+            validator(eventItems, "title", eventItem.title)
+        ) this.props.dispatch(eventActions.createEventItem(eventItem));
     };
 
     completeEventItem = (eventItem) => {
@@ -44,12 +58,13 @@ class TodoPage extends Component {
     };
 
     render() {
+        const {titleValid, descValid, dateValid} = this.state;
         const {
             title,
             desc,
-            date
+            date,
+            completed
         } = this.state.eventItem;
-
 
         return (
             <>
@@ -64,6 +79,13 @@ class TodoPage extends Component {
                             onChange={this.handleChange}
                             value={title}
                         />
+                        <span
+                            className="error-box"
+                            style={{
+                            color: !titleValid  ?  "red" : "transparent"
+                        }}>
+                            Error
+                        </span>
                     </label>
                     <label htmlFor="desc">
                         Event description:
@@ -73,6 +95,13 @@ class TodoPage extends Component {
                             onChange={this.handleChange}
                             value={desc}
                         />
+                        <span
+                            className="error-box"
+                            style={{
+                            color: !descValid ?  "red" : "transparent"
+                        }}>
+                            Error
+                        </span>
                     </label>
                     <label htmlFor="date">
                         Event date:
@@ -82,35 +111,32 @@ class TodoPage extends Component {
                             onChange={this.handleChange}
                             value={date}
                         />
+                        <span
+                            className="error-box"
+                            style={{
+                                color: !dateValid ?  "red" : "transparent"
+                            }}>
+                            Error
+                        </span>
                     </label>
                     <input type="submit" value="Save" />
+                    <span
+                        className="error-submit-box"
+                        style={{
+                            color: titleValid && descValid && dateValid  ?  "transparent" : "red"
+                        }}>
+                            Please fill in all the fields...
+                        </span>
                 </form>
                 <h2>Here are your events:</h2>
                 {this.props.eventItems.map(eventItem => (
-                    <div className="eventItem" key={eventItem.title} style={eventItem.style}>
-                        {eventItem.title}
-                        {" | "}
-                        {eventItem.desc}
-                        {" | "}
-                        {eventItem.date}
-                        {" "}
-                        <button
-                            className="completeEvent"
-                            type="button"
-                            title="Complete this event"
-                            onClick={() => this.completeEventItem(eventItem)}
-                        >
-                            <img src={thumbUpIcon} alt="remove event"/>
-                        </button>
-                        <button
-                            className="removeEvent"
-                            type="button"
-                            title="Remove this event"
-                            onClick={() => this.removeEventItem(eventItem)}
-                        >
-                            <img src={crossIcon} alt="remove event"/>
-                        </button>
-                    </div>
+                    <EventItem
+                        key={eventItem.title}
+                        event={eventItem}
+                        completed={completed}
+                        completeEvent={() => this.completeEventItem(eventItem)}
+                        removeEvent={() => this.removeEventItem(eventItem)}
+                    />
                 ))}
             </>
         )
