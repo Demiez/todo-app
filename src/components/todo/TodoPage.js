@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as eventActions from '../redux/actions/eventActions';
+import * as eventActions from '../../redux/actions/eventActions';
 import EventItem from './EventItem/EventItem';
 import validator from '../../utils/validator';
 
