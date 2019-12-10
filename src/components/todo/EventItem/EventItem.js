@@ -5,12 +5,13 @@ import crossIcon from "../../../assets/images/cross.svg";
 
 const EventItem = (props) => {
     const {event, completeEvent, removeEvent } = props;
-    const {title, desc, date, completed} = event;
+    const {title, desc, date, completed, visible} = event;
     // console.log(completed)
     return (
         <div className="eventItem"
              style={{
-                 fontWeight: completed ? "bold" : "normal"
+                 fontWeight: completed ? "bold" : "normal",
+                 display: visible ? "block" : "none"
              }}
         >
             {title}

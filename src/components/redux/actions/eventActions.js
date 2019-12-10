@@ -20,3 +20,17 @@ export function removeEventItem (eventItem) {
         eventItem
     }
 }
+
+export function searchEventItem (search) {
+    return {
+        type: types.SEARCH_EVENT_ITEM,
+        search
+    }
+}
+
+export function filterEventItem (filter) {
+    return {
+        type: types.FILTER_EVENT_ITEM,
+        filter
+    }
+}

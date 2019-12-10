@@ -16,7 +16,9 @@ class TodoPage extends Component {
                 desc: "",
                 date: "",
                 completed: false,
+                visible: true,
             },
+            filter: "all",
             search: "",
             titleValid: false,
             descValid: false,
@@ -24,11 +26,19 @@ class TodoPage extends Component {
         }
     }
 
+    // componentDidUpdate(prevState) {
+    //     const {filter} = this.state;
+    //     if(prevState.filter !== this.state.filter) {
+    //         this.props.dispatch(eventActions.filterEventItem(filter))
+    //     }
+    // }
+
     handleSearchFilter = event => {
         const {name, value} = event.target;
         this.setState({
             [name]: value
         })
+        if (name === 'filter') this.props.dispatch(eventActions.filterEventItem(value))
     };
 
     handleChange = event => {
@@ -65,13 +75,19 @@ class TodoPage extends Component {
         this.props.dispatch(eventActions.removeEventItem(eventItem))
     };
 
+    searchEventItem = () => {
+        const {search} = this.state;
+        this.props.dispatch(eventActions.searchEventItem(search))
+    };
+
     render() {
-        const {search, titleValid, descValid, dateValid} = this.state;
+        const {filter, search, titleValid, descValid, dateValid} = this.state;
         const {
             title,
             desc,
             date,
-            completed
+            completed,
+            visible
         } = this.state.eventItem;
 
         return (
@@ -87,7 +103,10 @@ class TodoPage extends Component {
                             onChange={this.handleSearchFilter}
                             value={search}
                         />
-                        <button type="submit">Search</button>
+                        <button
+                            type="button"
+                            onClick={this.searchEventItem}
+                        >Search</button>
                     </label>
                     <h2>Please enter your event:</h2>
                     <label htmlFor="title">
@@ -148,11 +167,26 @@ class TodoPage extends Component {
                         </span>
                 </form>
                 <h2>Here are your events:</h2>
+                <div>
+                    Filter:
+                    <select
+                        className="filter"
+                        name="filter"
+                        value={filter}
+                        onChange={this.handleSearchFilter}
+                    >
+                        <option value="all">All</option>
+                        <option value="completed">Completed</option>
+                        <option value="uncompleted">Uncompleted</option>
+                        <option value="passed">Passed</option>
+                    </select>
+                </div>
                 {this.props.eventItems.map(eventItem => (
                     <EventItem
                         key={eventItem.title}
                         event={eventItem}
                         completed={completed}
+                        visible={visible}
                         completeEvent={() => this.completeEventItem(eventItem)}
                         removeEvent={() => this.removeEventItem(eventItem)}
                     />

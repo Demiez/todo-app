@@ -4,8 +4,7 @@ const validator = (eventItems, name, value) => {
         case "title": {
             if (Object.entries(eventItems.length)) {
                 eventItems.map((item) => {
-                    console.log(item);
-                    console.log(value);
+                    // console.log("Validator: ", item, value);
                     if (value === item.title) {
                         console.log(true);
                         valid = false;
