@@ -17,11 +17,19 @@ class TodoPage extends Component {
                 date: "",
                 completed: false,
             },
+            search: "",
             titleValid: false,
             descValid: false,
             dateValid: false
         }
     }
+
+    handleSearchFilter = event => {
+        const {name, value} = event.target;
+        this.setState({
+            [name]: value
+        })
+    };
 
     handleChange = event => {
         const {eventItems} = this.props;
@@ -58,7 +66,7 @@ class TodoPage extends Component {
     };
 
     render() {
-        const {titleValid, descValid, dateValid} = this.state;
+        const {search, titleValid, descValid, dateValid} = this.state;
         const {
             title,
             desc,
@@ -70,6 +78,17 @@ class TodoPage extends Component {
             <>
                 <h1>ToDo</h1>
                 <form className="todo_form" onSubmit={this.handleSubmit}>
+                    <label className="search" htmlFor="search">
+                        Search event:
+                        <input
+                            className="search-input"
+                            type="text"
+                            name="search"
+                            onChange={this.handleSearchFilter}
+                            value={search}
+                        />
+                        <button type="submit">Search</button>
+                    </label>
                     <h2>Please enter your event:</h2>
                     <label htmlFor="title">
                         Event title:
