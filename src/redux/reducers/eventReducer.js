@@ -8,8 +8,13 @@ export default function eventItemReducer (state = [], action) {
             let selectedItem = action.eventItem;
 
             return state.map(eventItem => {
-                if (eventItem === selectedItem){
+                if (eventItem === selectedItem && !selectedItem.completed){
                     eventItem = {...eventItem, completed : true};
+                    console.log("Complete => ", eventItem);
+                    return eventItem;
+                }
+                if (eventItem === selectedItem && selectedItem.completed){
+                    eventItem = {...eventItem, completed : false};
                     console.log("Complete => ", eventItem);
                     return eventItem;
                 }
