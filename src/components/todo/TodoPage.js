@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as eventActions from '../../redux/actions/eventActions';
 import EventItem from './EventItem/EventItem';
 import validator from '../../utils/validator';
+import Modal from '../Modal/Modal';
 
 import './TodoPage.scss';
 
@@ -22,22 +23,16 @@ class TodoPage extends Component {
             search: "",
             titleValid: false,
             descValid: false,
-            dateValid: false
+            dateValid: false,
+            showModal: false,
         }
     }
-
-    // componentDidUpdate(prevState) {
-    //     const {filter} = this.state;
-    //     if(prevState.filter !== this.state.filter) {
-    //         this.props.dispatch(eventActions.filterEventItem(filter))
-    //     }
-    // }
 
     handleSearchFilter = event => {
         const {name, value} = event.target;
         this.setState({
             [name]: value
-        })
+        });
         if (name === 'filter') this.props.dispatch(eventActions.filterEventItem(value))
     };
 
@@ -75,13 +70,32 @@ class TodoPage extends Component {
         this.props.dispatch(eventActions.removeEventItem(eventItem))
     };
 
+    editEventItem = (eventItem, title, desc, date) => {
+        this.setState({
+            showModal: false
+        }, () => this.props.dispatch(eventActions.editEventItem(eventItem, title, desc, date)))
+
+    };
+
     searchEventItem = () => {
         const {search} = this.state;
         this.props.dispatch(eventActions.searchEventItem(search))
     };
 
+    showModal = () => {
+        this.setState({
+            showModal: true
+        })
+    };
+
+    closeModal = () => {
+        this.setState({
+            showModal: false
+        })
+    };
+
     render() {
-        const {filter, search, titleValid, descValid, dateValid} = this.state;
+        const {filter, search, titleValid, descValid, dateValid, showModal, eventItem} = this.state;
         const {
             title,
             desc,
@@ -189,8 +203,15 @@ class TodoPage extends Component {
                         visible={visible}
                         completeEvent={() => this.completeEventItem(eventItem)}
                         removeEvent={() => this.removeEventItem(eventItem)}
+                        showModal={() => this.showModal()}
                     />
                 ))}
+                <Modal
+                    eventItem={eventItem}
+                    show={showModal}
+                    closeModal={this.closeModal}
+                    editEventItem={this.editEventItem}
+                />
             </>
         )
     }

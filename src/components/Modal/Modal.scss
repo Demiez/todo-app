@@ -1,0 +1,19 @@
+$def-indent: 4px;
+
+.modal {
+  position: absolute;
+  top: 15%;
+  left: 40%;
+  max-width: 400px;
+  border: 1px solid black;
+  padding: $def-indent;
+
+  input {
+    display: block;
+    margin: $def-indent;
+  }
+  button {
+    border: 1px solid black;
+    margin: $def-indent;
+  }
+}

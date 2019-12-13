@@ -83,7 +83,22 @@ export default function eventItemReducer (state = [], action) {
                     return state;
             }
         }
+        case types.EDIT_EVENT_ITEM: {
+            let selectedItem = action.eventItem;
+            console.log(action)
+            console.log(selectedItem)
+            const { title, desc, date } = action;
+            console.log(title, desc, date)
 
+            return state.map(eventItem => {
+                if (eventItem === selectedItem){
+                    eventItem = {...selectedItem, title : title, desc: desc, date: date};
+                    console.log("Edit => ", eventItem);
+                    return eventItem;
+                }
+                return eventItem;
+            })
+        }
         // case types.SEARCH_EVENT_ITEM: {
         //     const { search } = action;
         //     let searchItem = null;

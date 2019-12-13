@@ -34,3 +34,10 @@ export function filterEventItem (filter) {
         filter
     }
 }
+
+export function editEventItem (eventItem, title, desc, date) {
+    return {
+        type: types.EDIT_EVENT_ITEM,
+        eventItem, title, desc, date
+    }
+}
