@@ -203,15 +203,13 @@ class TodoPage extends Component {
                         visible={visible}
                         completeEvent={() => this.completeEventItem(eventItem)}
                         removeEvent={() => this.removeEventItem(eventItem)}
+
                         showModal={() => this.showModal()}
+                        show={showModal}
+                        closeModal={() => this.closeModal()}
+                        editEventItem={() => this.editEventItem()}
                     />
                 ))}
-                <Modal
-                    eventItem={eventItem}
-                    show={showModal}
-                    closeModal={this.closeModal}
-                    editEventItem={this.editEventItem}
-                />
             </>
         )
     }

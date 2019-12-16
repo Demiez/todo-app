@@ -13,10 +13,14 @@ const modal = (props) => {
     //const [ dateInput , setDate ] = useState({...date});
 
     useEffect(() => {
-        setModal({
-            title, desc, date
-        });
-    },[title, desc, date]);
+        console.log ("mounted");
+        return () => console.log("dismounted")
+    });
+    // useEffect(() => {
+    //     setModal({
+    //         title, desc, date
+    //     });
+    // },[title, desc, date]);
 
     // useEffect(() => {
     //     setDesc(desc);
@@ -47,9 +51,9 @@ const modal = (props) => {
     return (
         <div
             className="modal"
-            style={{
-                display: show ? "block" : "none",
-            }}
+            // style={{
+            //     display: show ? "block" : "none",
+            // }}
         >
             <h2>Edit event:</h2>
             <input
