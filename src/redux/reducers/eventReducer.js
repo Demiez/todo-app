@@ -85,7 +85,7 @@ export default function eventItemReducer (state = [], action) {
         }
         case types.EDIT_EVENT_ITEM: {
             let selectedItem = action.eventItem;
-            console.log(action)
+            console.log("Action =>",action)
             console.log(selectedItem)
             const { title, desc, date } = action;
             console.log(title, desc, date)

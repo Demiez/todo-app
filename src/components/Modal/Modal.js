@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from 'react';
+// import { connect } from 'react-redux';
+// import * as eventActions from '../../redux/actions/eventActions';
 
 import './Modal.scss'
 
 const modal = (props) => {
-    const { show, closeModal, editEventItem, eventItem } = props;
+    const {
+        showModal,
+        editEventItem,
+        eventItem
+    } = props;
     const { title, desc, date } = props.eventItem;
 
     const [ modal , setModal ] = useState({
         title, desc, date
     });
+    console.log("Modal data", modal);
+    console.log("EventItem data", eventItem);
+    console.log(editEventItem)
     //const [ descInput , setDesc ] = useState({...desc});
     //const [ dateInput , setDate ] = useState({...date});
 
     useEffect(() => {
         console.log ("mounted");
         return () => console.log("dismounted")
-    });
+    },[]);
     // useEffect(() => {
     //     setModal({
     //         title, desc, date
@@ -33,20 +42,15 @@ const modal = (props) => {
     const onChangeHandler = event => {
         const { name, value } = event.target;
         setModal({... modal, [name]: value})
-        // switch(name){
-        //     case "title":
-        //         setTitle(value);
-        //         break;
-        //     case "desc":
-        //         setDesc(value);
-        //         break;
-        //     case "date":
-        //         setDate(value);
-        //         break;
-        //     default:
-        //         break;
-        // }
     };
+    // const editEventItemLocal = () => {
+    //     props.dispatch(eventActions.editEventItem(eventItem, modal.title, modal.desc, modal.date));
+    // };
+
+    // const editHandler = () => {
+    //     console.log("Handler",eventItem);
+    //     editEventItem(eventItem, modal.title, modal.desc, modal.date)
+    // };
 
     return (
         <div
@@ -76,11 +80,14 @@ const modal = (props) => {
             />
             <button
                 type="button"
-                onClick={() => editEventItem(eventItem, modal.title, modal.desc, modal.date)}
+                onClick={() => {
+                    console.log("In the onclick", eventItem);
+                    editEventItem(eventItem, modal.title, modal.desc, modal.date)
+                }}
             >Edit</button>
             <button
                 type="button"
-                onClick={closeModal}
+                onClick={() => showModal(false)}
             >Cancel</button>
         </div>
     )

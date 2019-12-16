@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import thumbUpIcon from "../../../assets/images/thumb-up.svg";
 import crossIcon from "../../../assets/images/cross.svg";
@@ -10,13 +10,22 @@ const EventItem = (props) => {
         event,
         completeEvent,
         removeEvent,
-        showModal,
-        show,
-        closeModal,
+        //showModal,
+        // show,
+        //closeModal,
         editEventItem
     } = props;
     const {title, desc, date, completed, visible} = event;
-    // console.log(completed)
+
+    const [eventItem, setEventItem ] = useState({});
+    const [modalIsShown, showModal] = useState(false);
+
+    useEffect(() => {
+        setEventItem({
+            ...event
+        })
+    },[event]);
+
     return (
         <>
             <div className="eventItem"
@@ -35,7 +44,7 @@ const EventItem = (props) => {
                     className="completeEvent"
                     type="button"
                     title="Edit this event"
-                    onClick={showModal}
+                    onClick={() => showModal(true)}
                 >
                     <img src={editIcon} alt="edit event"/>
                 </button>
@@ -56,9 +65,9 @@ const EventItem = (props) => {
                     <img src={crossIcon} alt="remove event"/>
                 </button>
             </div>
-            {show ? <Modal
-                eventItem={event}
-                closeModal={closeModal}
+            {modalIsShown ? <Modal
+                eventItem={eventItem}
+                showModal={showModal}
                 editEventItem={editEventItem}
             /> : null}
         </>

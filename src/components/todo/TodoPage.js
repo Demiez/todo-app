@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as eventActions from '../../redux/actions/eventActions';
 import EventItem from './EventItem/EventItem';
 import validator from '../../utils/validator';
-import Modal from '../Modal/Modal';
+// import Modal from '../Modal/Modal';
 
 import './TodoPage.scss';
 
@@ -59,40 +59,39 @@ class TodoPage extends Component {
             descValid &&
             dateValid &&
             validator(eventItems, "title", eventItem.title)
-        ) this.props.dispatch(eventActions.createEventItem(eventItem));
+        ) this.props.createEventItem(eventItem);
     };
 
     completeEventItem = (eventItem) => {
-        this.props.dispatch(eventActions.completeEventItem(eventItem))
+        // this.props.dispatch(eventActions.completeEventItem(eventItem))
+        this.props.completeEventItem(eventItem);
     };
 
     removeEventItem = (eventItem) => {
         this.props.dispatch(eventActions.removeEventItem(eventItem))
     };
 
-    editEventItem = (eventItem, title, desc, date) => {
-        this.setState({
-            showModal: false
-        }, () => this.props.dispatch(eventActions.editEventItem(eventItem, title, desc, date)))
-
-    };
+    // editEventItem = (eventItem, title, desc, date) => {
+    //     console.log("In the func editEventItem", eventItem);
+    //    this.props.editEventItem(eventItem, title, desc, date);
+    // };
 
     searchEventItem = () => {
         const {search} = this.state;
         this.props.dispatch(eventActions.searchEventItem(search))
     };
 
-    showModal = () => {
-        this.setState({
-            showModal: true
-        })
-    };
-
-    closeModal = () => {
-        this.setState({
-            showModal: false
-        })
-    };
+    // showModal = () => {
+    //     this.setState({
+    //         showModal: true
+    //     })
+    // };
+    //
+    // closeModal = () => {
+    //     this.setState({
+    //         showModal: false
+    //     })
+    // };
 
     render() {
         const {filter, search, titleValid, descValid, dateValid, showModal, eventItem} = this.state;
@@ -204,10 +203,10 @@ class TodoPage extends Component {
                         completeEvent={() => this.completeEventItem(eventItem)}
                         removeEvent={() => this.removeEventItem(eventItem)}
 
-                        showModal={() => this.showModal()}
-                        show={showModal}
-                        closeModal={() => this.closeModal()}
-                        editEventItem={() => this.editEventItem()}
+                        //showModal={() => this.showModal()}
+                        //show={showModal}
+                        //closeModal={() => this.closeModal()}
+                        editEventItem={this.props.editEventItem}
                     />
                 ))}
             </>
@@ -221,4 +220,13 @@ function mapStateToProps (state) {
     }
 }
 
-export default connect(mapStateToProps)(TodoPage);
+const mapDispatchToProps = dispatch => {
+    return {
+        // dispatching plain actions
+        completeEventItem: (eventItem) => dispatch(eventActions.completeEventItem(eventItem)),
+        createEventItem: (eventItem) => dispatch(eventActions.createEventItem(eventItem)),
+        editEventItem: (eventItem, title, desc, date) => dispatch(eventActions.editEventItem(eventItem, title, desc, date))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoPage);
