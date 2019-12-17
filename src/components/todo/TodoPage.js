@@ -33,7 +33,7 @@ class TodoPage extends Component {
         this.setState({
             [name]: value
         });
-        if (name === 'filter') this.props.dispatch(eventActions.filterEventItem(value))
+        if (name === 'filter') this.props.filterEventItem(value)
     };
 
     handleChange = event => {
@@ -68,17 +68,17 @@ class TodoPage extends Component {
     };
 
     removeEventItem = (eventItem) => {
-        this.props.dispatch(eventActions.removeEventItem(eventItem))
+        this.props.removeEventItem(eventItem);
     };
 
-    // editEventItem = (eventItem, title, desc, date) => {
-    //     console.log("In the func editEventItem", eventItem);
-    //    this.props.editEventItem(eventItem, title, desc, date);
-    // };
+    editEventItem = (eventItem, title, desc, date) => {
+        console.log("In the func editEventItem", eventItem, title, desc, date);
+       this.props.editEventItem(eventItem, title, desc, date);
+    };
 
     searchEventItem = () => {
         const {search} = this.state;
-        this.props.dispatch(eventActions.searchEventItem(search))
+        this.props.searchEventItem(search);
     };
 
     // showModal = () => {
@@ -206,7 +206,7 @@ class TodoPage extends Component {
                         //showModal={() => this.showModal()}
                         //show={showModal}
                         //closeModal={() => this.closeModal()}
-                        editEventItem={this.props.editEventItem}
+                        editEventItem={this.editEventItem}
                     />
                 ))}
             </>
@@ -223,9 +223,12 @@ function mapStateToProps (state) {
 const mapDispatchToProps = dispatch => {
     return {
         // dispatching plain actions
-        completeEventItem: (eventItem) => dispatch(eventActions.completeEventItem(eventItem)),
-        createEventItem: (eventItem) => dispatch(eventActions.createEventItem(eventItem)),
-        editEventItem: (eventItem, title, desc, date) => dispatch(eventActions.editEventItem(eventItem, title, desc, date))
+        completeEventItem: eventItem => dispatch(eventActions.completeEventItem(eventItem)),
+        createEventItem: eventItem => dispatch(eventActions.createEventItem(eventItem)),
+        editEventItem: (eventItem, title, desc, date) => dispatch(eventActions.editEventItem(eventItem, title, desc, date)),
+        removeEventItem: eventItem => dispatch(eventActions.removeEventItem(eventItem)),
+        searchEventItem: search => dispatch(eventActions.searchEventItem(search)),
+        filterEventItem: value => dispatch(eventActions.filterEventItem(value)),
     }
 };
 

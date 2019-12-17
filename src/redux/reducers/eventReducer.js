@@ -86,12 +86,16 @@ export default function eventItemReducer (state = [], action) {
         case types.EDIT_EVENT_ITEM: {
             let selectedItem = action.eventItem;
             console.log("Action =>",action)
-            console.log(selectedItem)
+            console.log("SelectedItem in reducer", selectedItem)
             const { title, desc, date } = action;
             console.log(title, desc, date)
 
             return state.map(eventItem => {
-                if (eventItem === selectedItem){
+                console.log(eventItem, selectedItem);
+                if (eventItem.title === selectedItem.title &&
+                    eventItem.desc === selectedItem.desc &&
+                    eventItem.date === selectedItem.date
+                ){
                     eventItem = {...selectedItem, title : title, desc: desc, date: date};
                     console.log("Edit => ", eventItem);
                     return eventItem;
@@ -99,22 +103,7 @@ export default function eventItemReducer (state = [], action) {
                 return eventItem;
             })
         }
-        // case types.SEARCH_EVENT_ITEM: {
-        //     const { search } = action;
-        //     let searchItem = null;
-        //     console.log("SEARCH REDUCER: state =>", state)
-        //
-        //     state.map(eventItem => {
-        //         if (eventItem.title === search) {
-        //             console.log(eventItem);
-        //             searchItem = {...eventItem};
-        //             console.log("searchItem", searchItem)
-        //         }
-        //         return eventItem;
-        //     });
-        //
-        //     return searchItem ? [searchItem] : state;
-        // }
+
         default:
             return state;
     }

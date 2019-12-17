@@ -25,6 +25,15 @@ const modal = (props) => {
         console.log ("mounted");
         return () => console.log("dismounted")
     },[]);
+
+    // useEffect(() => {
+    //     console.log ("mounted");
+    //     setModal({
+    //         ...eventItem
+    //     })
+    //     return () => console.log("dismounted")
+    // },[eventItem]);
+
     // useEffect(() => {
     //     setModal({
     //         title, desc, date
