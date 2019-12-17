@@ -85,16 +85,17 @@ export default function eventItemReducer (state = [], action) {
         }
         case types.EDIT_EVENT_ITEM: {
             let selectedItem = action.eventItem;
-            console.log("Action =>",action)
-            console.log("SelectedItem in reducer", selectedItem)
             const { title, desc, date } = action;
-            console.log(title, desc, date)
+            const checkTitle = (state) => {
+                console.log("searching title", title)
+                const checkedState = state.filter(eventItem => eventItem.title === title);
+                return checkedState.length === 0;
+            };
 
             return state.map(eventItem => {
                 console.log(eventItem, selectedItem);
-                if (eventItem.title === selectedItem.title &&
-                    eventItem.desc === selectedItem.desc &&
-                    eventItem.date === selectedItem.date
+                if (JSON.stringify(eventItem) === JSON.stringify(selectedItem)
+                    && checkTitle(state)
                 ){
                     eventItem = {...selectedItem, title : title, desc: desc, date: date};
                     console.log("Edit => ", eventItem);
