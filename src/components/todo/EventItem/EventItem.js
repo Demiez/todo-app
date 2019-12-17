@@ -52,7 +52,7 @@ const EventItem = (props) => {
                     className="completeEvent"
                     type="button"
                     title="Complete this event"
-                    onClick={completeEvent}
+                    onClick={() => completeEvent()}
                 >
                     <img src={thumbUpIcon} alt="complete event"/>
                 </button>
@@ -60,7 +60,7 @@ const EventItem = (props) => {
                     className="removeEvent"
                     type="button"
                     title="Remove this event"
-                    onClick={removeEvent}
+                    onClick={() => removeEvent()}
                 >
                     <img src={crossIcon} alt="remove event"/>
                 </button>

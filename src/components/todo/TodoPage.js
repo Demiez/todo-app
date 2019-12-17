@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as eventActions from '../../redux/actions/eventActions';
-import EventItem from './EventItem/EventItem';
+// import EventItem from './EventItem/EventItem';
 import validator from '../../utils/validator';
 // import Modal from '../Modal/Modal';
+import ViewItems from './ViewItems/ViewItems';
 
 import './TodoPage.scss';
 
@@ -194,21 +195,12 @@ class TodoPage extends Component {
                         <option value="passed">Passed</option>
                     </select>
                 </div>
-                {this.props.eventItems.map(eventItem => (
-                    <EventItem
-                        key={eventItem.title}
-                        event={eventItem}
-                        completed={completed}
-                        visible={visible}
-                        completeEvent={() => this.completeEventItem(eventItem)}
-                        removeEvent={() => this.removeEventItem(eventItem)}
-
-                        //showModal={() => this.showModal()}
-                        //show={showModal}
-                        //closeModal={() => this.closeModal()}
-                        editEventItem={this.editEventItem}
-                    />
-                ))}
+                <ViewItems
+                    eventItems={this.props.eventItems}
+                    completeEvent={this.completeEventItem}
+                    editEvent={this.editEventItem}
+                    removeEvent={this.removeEventItem}
+                />
             </>
         )
     }
